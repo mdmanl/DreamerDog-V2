@@ -1,0 +1,12 @@
+{
+    "name": "Dreamer",
+    "version": "2",
+    "description": "DreamerDog",
+    "main": "index.js",
+    "author": "Joey van Kouwenberg",
+    "dependencies": {
+      "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+      "winston": "^3.2.1"
+    }
+  }
+  
