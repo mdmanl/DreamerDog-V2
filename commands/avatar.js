@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'avatar',
 	cooldown: 10,
-	description: 'Get the avatar URL of the tagged user(s), or your own avatar.',
+	description: 'Get the avatar URL of the tagged user, or your own avatar.',
 	execute(message) {
 		if (!message.mentions.users.size) {
 			return message.channel.send(`Your avatar: ${message.author.displayAvatarURL({ dynamic: true })}`);
