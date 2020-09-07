@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Joey van Kouwenberg",
   "dependencies": {
+    "axios": "^0.20.0",
     "date-and-time": "^0.14.1",
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
     "winston": "^3.2.1"

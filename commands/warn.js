@@ -1,3 +1,5 @@
+const nodeDate = require('date-and-time');
+
 module.exports = {
 	name: 'warn',
 	aliases: ['warning'],
@@ -5,7 +7,7 @@ module.exports = {
 	guildOnly: true,
 	adminOnly: true,
 	execute(message, args) {
-		let nodeDate = require('date-and-time');
+		
 		let now = nodeDate.format(new Date(), 'HH:mm [GMT+1] DD[th] of MMMM');
 
 		let member = message.mentions.members.first();
