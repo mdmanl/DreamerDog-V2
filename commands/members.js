@@ -1,5 +1,6 @@
 module.exports = {
 	name: 'members',
+	aliases: ['counter'],
 	description: 'Shows amount of members.',
 	cooldown: 30,
 	guildOnly: true,
