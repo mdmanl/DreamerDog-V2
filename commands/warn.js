@@ -23,12 +23,12 @@ module.exports = {
 		  message.channel.send(`${tickgreen} ${member.user.tag} has been warned.`)
 		  .then(message => message.delete(3000));
 		  if(!member.roles.some(r=>["577139538938429443"].includes(r.id)) )
-		  return client.channels.get(`585557517531348992`).send(`${member} Warned once by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.addRole(wOnce);
+		  return message.client.channels.get(`585557517531348992`).send(`${member} Warned once by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.addRole(wOnce);
 		  if(!member.roles.some(r=>["577139713807482912"].includes(r.id)) )
-		  return client.channels.get(`585557517531348992`).send(`${member} Warned twice by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.addRole(wTwice);
+		  return message.client.channels.get(`585557517531348992`).send(`${member} Warned twice by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.addRole(wTwice);
 		  member.addRole(rBanned);
 		  member.ban("Banned by DreamerDog after 2 warnings");
-		  bot.channels.get(`585557517531348992`).send(`I banned ${member} from the server as he/she just got their third warning by Admin: ${message.author.username}. **Reason: ${reason}**`);
+		  message.client.channels.get(`585557517531348992`).send(`I banned ${member} from the server as he/she just got their third warning by Admin: ${message.author.username}. **Reason: ${reason}**`);
 		
 	},
 };
