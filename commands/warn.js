@@ -4,18 +4,31 @@ module.exports = {
 	description: 'Warns a user.',
 	guildOnly: true,
 	adminOnly: true,
-	execute(message, args) {
-		const amount = parseInt(args[0]) + 1;
+	execute(message) {
+		var wOnce = message.member.guild.roles.find(role => role.id === "577139538938429443");
+		var wTwice = message.member.guild.roles.find(role => role.id === "577139713807482912");
+		var rBanned = message.member.guild.roles.find(role => role.id === "676374298763591690");
+		let now = nodeDate.format(new Date(), 'HH:mm [GMT+1] DD[th] of MMMM');
 
-		if (isNaN(amount)) {
-			return message.reply('that doesn\'t seem to be a valid number.');
-		} else if (amount <= 1 || amount > 100) {
-			return message.reply('you need to input a number between 1 and 99.');
-		}
+		let member = message.mentions.members.first();
+		if(!member)
+		  return message.delete(), message.channel.send(":information_source: Ehm, you didn't mention a valid member d0g.")
+		  .then(message => message.delete(5000));
 
-		message.channel.bulkDelete(amount, true).catch(err => {
-			console.error(err);
-			message.channel.send('there was an error trying to prune messages in this channel!');
-		});
+		  let reason = args.slice(1).join(' ');
+		  if(!reason) return message.delete(), message.channel.send(":information_source: Ehm, you forgot the reason d0g.")
+		  .then(message => message.delete(5000));
+
+		  message.delete();
+		  message.channel.send(`${tickgreen} ${member.user.tag} has been warned.`)
+		  .then(message => message.delete(3000));
+		  if(!member.roles.some(r=>["577139538938429443"].includes(r.id)) )
+		  return client.channels.get(`585557517531348992`).send(`${member} Warned once by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.addRole(wOnce);
+		  if(!member.roles.some(r=>["577139713807482912"].includes(r.id)) )
+		  return client.channels.get(`585557517531348992`).send(`${member} Warned twice by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.addRole(wTwice);
+		  member.addRole(rBanned);
+		  member.ban("Banned by DreamerDog after 2 warnings");
+		  bot.channels.get(`585557517531348992`).send(`I banned ${member} from the server as he/she just got their third warning by Admin: ${message.author.username}. **Reason: ${reason}**`);
+		
 	},
 };
