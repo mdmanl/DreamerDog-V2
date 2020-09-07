@@ -20,8 +20,8 @@ client.once('ready', () => {
 	console.log('DreamerDog initialized & ready!');
 });
 
-client.on('message', message => {
-	if (!message.content.toLowerCase().startsWith("n:") || message.author.bot) return;
+client.on('message', async message => {
+	if (!message.content.toLowerCase().startsWith("d:") || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
