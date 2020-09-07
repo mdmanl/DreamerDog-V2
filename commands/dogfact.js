@@ -1,5 +1,4 @@
 const axios = require('axios');
-const Discord = require('discord.js');
 
 module.exports = {
     name: 'dogfact',
