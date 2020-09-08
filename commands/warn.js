@@ -4,6 +4,7 @@ module.exports = {
 	name: 'warn',
 	aliases: ['warning'],
 	description: 'Warns a user. (Admin only)',
+	usage: '[User] [Reason]',
 	guildOnly: true,
 	adminOnly: true,
 	execute(message, args) {
