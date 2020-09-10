@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 const cooldowns = new Discord.Collection();
 
 client.once('ready', () => {
-	client.user.setActivity('HaiX on YouTube', { type: 'WATCHING' })
+	client.user.setActivity('HaiX.best', { type: 'WATCHING' })
 	console.log('DreamerDog initialized & ready!');
 });
 
