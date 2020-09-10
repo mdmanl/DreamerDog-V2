@@ -8,7 +8,7 @@ module.exports = {
 	description: 'Shows CS:GO settings of HaiX.',
 	async execute(message) {
         let getSettings = async () => {
-        let response = await axios.get('https://jovako.nl/dreamerdog/settings');
+        let response = await axios.get('https://dreamerdog.haix.best/settings');
         let settings = response.data;
         return settings;
     }
@@ -16,8 +16,8 @@ module.exports = {
     let SV = await getSettings();
     var eSettings = new Discord.MessageEmbed()
     .setColor('#bf2222')
-    .setAuthor(`HaiX CS:GO Settings`, 'https://jovako.nl/dreamerdog/img/haix.png', '')
-    .setThumbnail('https://jovako.nl/dreamerdog/img/haix.png')
+    .setAuthor(`HaiX CS:GO Settings`, 'https://dreamerdog.haix.best/img/haix.png', '')
+    .setThumbnail('https://dreamerdog.haix.best/img/haix.png')
     .addField('Viewmodel:', SV.viewmodel, true)
     .addField('Crosshair:', SV.crosshair, true)
     .addField('Sensitivity:', SV.sens, true)
