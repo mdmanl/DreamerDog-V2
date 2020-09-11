@@ -15,6 +15,9 @@ module.exports = {
 
 		if(!member)
 		  return message.delete(), message.channel.send(":information_source: Ehm, you didn't mention a valid member d0g.")
+
+		  if(member.roles.cache.some(r=>["GOD", "The Overseers", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) )
+		  return message.delete(), message.channel.send(`You cannot warn another admin!`)
 		 
 		  let reason = args.slice(1).join(' ');
 		  if(!reason) return message.delete(), message.channel.send(":information_source: Ehm, you forgot the reason d0g.")
