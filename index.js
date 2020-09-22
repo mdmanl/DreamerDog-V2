@@ -39,7 +39,7 @@ client.on('message', async message => {
 		return message.reply('This command is owner only!');
 	}
 
-	if (command.adminOnly && !message.member.roles.cache.some(r=>["GOD", "The Overseers", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) ) {
+	if (command.adminOnly && !message.member.roles.cache.some(r=>["GOD", "The Overseers", "Head Administrator", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) ) {
 		return message.reply('This command is admin only!');
 	}
 
