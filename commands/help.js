@@ -5,7 +5,7 @@ module.exports = {
 	description: 'List all of my commands or info about a specific command.',
 	aliases: ['commands'],
 	usage: '[command name]',
-	cooldown: 5,
+	cooldown: 10,
 	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
@@ -39,7 +39,7 @@ module.exports = {
 		if (command.description) data.push(`**Description:** ${command.description}`);
 		if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
 
-		data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
+		data.push(`**Cooldown:** ${command.cooldown || 0} second(s)`);
 
 		message.channel.send(data, { split: true });
 	},
