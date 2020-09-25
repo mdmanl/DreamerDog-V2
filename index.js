@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 const cooldowns = new Discord.Collection();
 
 client.once('ready', () => {
-	client.user.setActivity('HaiX.best', { type: 'WATCHING' })
+	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
 	console.log('DreamerDog initialized & ready!');
 });
 
@@ -39,7 +39,7 @@ client.on('message', async message => {
 		return message.reply('This command is owner only!');
 	}
 
-	if (command.adminOnly && !message.member.roles.cache.some(r=>["GOD", "The Overseers", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) ) {
+	if (command.adminOnly && !message.member.roles.cache.some(r=>["GOD", "The Overseers", "Head Administrator", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) ) {
 		return message.reply('This command is admin only!');
 	}
 
@@ -59,7 +59,7 @@ client.on('message', async message => {
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 3) * 1000;
+	const cooldownAmount = (command.cooldown || 0) * 1000;
 
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
