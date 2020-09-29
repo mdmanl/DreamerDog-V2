@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { prefix, owner, admins, token } = require('./config.json');
 
 
 const client = new Discord.Client();
@@ -21,7 +21,8 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
-	if (!message.content.toLowerCase().startsWith("d:") || message.author.bot) return;
+	if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot) return;
+
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
@@ -35,11 +36,11 @@ client.on('message', async message => {
 		return message.reply(`I can't execute that command inside DMs!`);
 	}
 
-	if (command.ownerOnly && message.author.id !== '614556845335642146') {
+	if (command.ownerOnly && message.author.id !== owner) {
 		return message.reply('This command is owner only!');
 	}
 
-	if (command.adminOnly && !message.member.roles.cache.some(r=>["GOD", "The Overseers", "Head Administrator", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) ) {
+	if (command.adminOnly && !message.member.roles.cache.some(r=>admins.includes(r.name)) ) {
 		return message.reply('This command is admin only!');
 	}
 

@@ -1,4 +1,5 @@
 const nodeDate = require('date-and-time');
+const { admins } = require('../config.json');
 
 module.exports = {
 	name: 'warn',
@@ -16,7 +17,7 @@ module.exports = {
 		if(!member)
 		  return message.delete(), message.channel.send(":information_source: Ehm, you didn't mention a valid member d0g.")
 
-		  if(member.roles.cache.some(r=>["GOD", "The Overseers", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"].includes(r.name)) )
+		  if(member.roles.cache.some(r=>admins.includes(r.name)) )
 		  return message.delete(), message.channel.send(`You cannot warn another admin!`)
 		 
 		  let reason = args.slice(1).join(' ');
