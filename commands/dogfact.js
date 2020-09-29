@@ -12,6 +12,6 @@ module.exports = {
             return Dogfact;
           }
           let DogfactValue = await getDogfact();
-          message.channel.send(`${DogfactValue.fact}`)   
+          message.channel.send(`:dog: ${DogfactValue.fact}`)   
     },
 };
