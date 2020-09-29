@@ -34,8 +34,7 @@ module.exports = {
     .addField('Texture Filtering Mode:', SV.texturefiltermode, true)
     .addField('Wait for Vertical Sync:', SV.waitsync, true)
     .addField('Motion Blur:', SV.motionblur, true)
-    .setTimestamp()
-    .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL)
+    .setFooter(`Last update: ${SV.lastupdate}`)
     message.channel.send(eSettings)
     },
 };
