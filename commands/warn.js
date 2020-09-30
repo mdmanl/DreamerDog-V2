@@ -10,7 +10,7 @@ module.exports = {
 	usage: '[User] [Reason]',
 	guildOnly: true,
 	adminOnly: true,
-	execute(message, args) {
+	async execute(message, args) {
 		
 		let now = nodeDate.format(new Date(), 'HH:mm [GMT+1] DD[th] of MMMM');
 
