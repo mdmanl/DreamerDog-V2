@@ -1,7 +1,7 @@
 const nodeDate = require('date-and-time');
 const mysql = require("mysql");
 const database = require("../database.json");
-const admins = require('../config.json');
+const { admins, warningChannel, warnedonceRole, warnedtwiceRole, bannedRole } = require('../config.json');
 
 module.exports = {
 	name: 'warn',
@@ -27,13 +27,13 @@ module.exports = {
 		  
 		  message.delete();
 		  message.channel.send(`${member.user.tag} has been warned.`)
-		  if(!member.roles.cache.some(r=>["577139538938429443"].includes(r.id)) )
-		  return message.client.channels.cache.get(`585557517531348992`).send(`${member} Warned once by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.roles.add('577139538938429443');
-		  if(!member.roles.cache.some(r=>["577139713807482912"].includes(r.id)) )
-		  return message.client.channels.cache.get(`585557517531348992`).send(`${member} Warned twice by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.roles.add('577139713807482912');
-		  member.roles.add('676374298763591690');
+		  if(!member.roles.cache.some(r=>[warnedonceRole].includes(r.id)) )
+		  return message.client.channels.cache.get(warningChannel).send(`${member} Warned once by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.roles.add(warnedonceRole);
+		  if(!member.roles.cache.some(r=>[warnedtwiceRole].includes(r.id)) )
+		  return message.client.channels.cache.get(warningChannel).send(`${member} Warned twice by Admin: ${message.author.username} ${now} **Reason: ${reason}**`), member.roles.add(warnedtwiceRole);
+		  member.roles.add(bannedRole);
 		  member.ban({ reason: 'Third warning: Banned by DreamerDog' })
-		  message.client.channels.cache.get(`585557517531348992`).send(`I banned ${member} from the server as he/she just got their third warning by Admin: ${message.author.username}. **Reason: ${reason}**`);
+		  message.client.channels.cache.get(warningChannel).send(`I banned ${member} from the server as he/she just got their third warning by Admin: ${message.author.username}. **Reason: ${reason}**`);
 		
 	},
 };

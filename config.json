@@ -4,5 +4,8 @@
 	"admins": ["GOD", "The Overseers", "Head Administrator", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"],
 	"logChannel": "608408953428246592",
 	"warningChannel": "585557517531348992",
+	"warnedonceRole": "577139538938429443",
+	"warnedtwiceRole": "577139713807482912",
+	"bannedRole": "676374298763591690",
 	"token": "TOKEN-HERE"
 }
