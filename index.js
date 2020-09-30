@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, owner, admins, token } = require('./config.json');
+const database = require("./database.json");
+const mysql = require("mysql");
 
 
 const client = new Discord.Client();
