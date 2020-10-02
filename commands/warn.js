@@ -1,7 +1,7 @@
 const nodeDate = require('date-and-time');
 const mysql = require("mysql");
 const database = require("../database.json");
-const { admins, warningChannel, warnedonceRole, warnedtwiceRole, bannedRole } = require('../config.json');
+const { admins, warningChannel, warnedonceRole, warnedtwiceRole } = require('../config.json');
 
 module.exports = {
 	name: 'warn',
