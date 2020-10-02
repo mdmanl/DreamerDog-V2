@@ -77,14 +77,13 @@ module.exports = {
 
 					if (rows.length >= 1) {
 
-					con.query(`UPDATE data SET reason = '${reason}', expiryDate = '${expiryDate}', admin = '${message.author.user}', activeWarns = '2' WHERE memberID = '${member.id}'`);
+					con.query(`UPDATE data SET reason = '${reason}', expiryDate = '${expiryDate}', admin = '${message.author.username}', activeWarns = '2' WHERE memberID = '${member.id}'`);
 
 					}
 				})
 			}
 
 			if (activeWarns == 2) {
-				member.roles.add(bannedRole);
 				member.ban({ reason: 'Banned by DreamerDog: third warning.' });
 				message.client.channels.cache.get(warningChannel).send(`${member.user.tag} just got banned as he or she got a third warning. Don't be like ${member.user.tag}. **Reason: ${reason}**`);
 				message.channel.send(`${member.user.tag} has been warned.`)
@@ -100,6 +99,5 @@ module.exports = {
 			}
 		}
 		})
-		con.end();
 	},
 };

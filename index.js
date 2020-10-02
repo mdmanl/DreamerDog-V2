@@ -43,6 +43,10 @@ client.on('guildMemberAdd', member => {
 
 		if(err) throw err;
 
+		if (rows.length < 1) return;
+
+		else {
+
 		let activeWarns = rows[0].activeWarns
 
 		if (activeWarns == 2) {
@@ -56,9 +60,8 @@ client.on('guildMemberAdd', member => {
 			member.roles.add(warnedonceRole);
 			member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
 		}
-
+	}
 	})
-	con.end();
 });
 
 client.on('message', async message => {
