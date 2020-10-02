@@ -28,7 +28,7 @@ module.exports = {
 				
 		if(!member) return message.delete(), message.channel.send(`You didn't tag a valid m0mber ${astridGasp}`);
 
-		if(member.roles.cache.some(r=>admins.includes(r.name)) ) return message.delete(), message.channel.send(pepeBoomer);
+		if(member.roles.cache.some(r=>admins.includes(r.name)) ) return message.delete(), message.channel.send(`${pepeBoomer}`);
 		 
 		let reason = args.slice(1).join(' ');
 		if(!reason) return message.delete(), message.channel.send(`Reason? ${astridGasp}`);
