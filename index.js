@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, owner, admins, token } = require('./config.json');
+const { prefix, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
 const database = require("./database.json");
 const mysql = require("mysql");
 
@@ -20,6 +20,45 @@ const cooldowns = new Discord.Collection();
 client.once('ready', () => {
 	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
 	console.log('DreamerDog initialized & ready!');
+});
+
+client.on('guildMemberAdd', member => {
+
+	var con = mysql.createConnection({
+
+		host: database.host,
+		user: database.user,
+		password: database.password,
+		database: "haix_warnings"        
+
+	});
+
+	con.connect(err => {
+
+		if(err) throw err;
+
+	});
+
+	con.query(`SELECT activeWarns FROM data WHERE memberID = '${member.id}'` , (err , rows) => {
+
+		if(err) throw err;
+
+		let activeWarns = rows[0].activeWarns
+
+		if (activeWarns == 2) {
+			member.roles.add(warnedonceRole);
+			member.roles.add(warnedtwiceRole);
+			member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
+
+		} 
+		
+		if (activeWarns == 1) {
+			member.roles.add(warnedonceRole);
+			member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
+		}
+
+	})
+	con.end();
 });
 
 client.on('message', async message => {
