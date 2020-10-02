@@ -9,3 +9,4 @@ What's new?
  - Permissions are now handled once in the index.js, rather than hardcoding permissions over and over again for every command.
  - Added support for command aliases.
  - Added an advanced help command that automatically adds new commands.
+ - Warnings are now handled by - and stored in the database.
