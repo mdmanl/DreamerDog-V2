@@ -20,7 +20,7 @@ module.exports = {
             host: database.host,
             user: database.user,
             password: database.password,
-            database: "haix_warnings"        
+            database: database.database        
 
 		});
 				
@@ -33,7 +33,7 @@ module.exports = {
 		});
 		
 	
-		con.query(`SELECT * FROM data WHERE memberID = '${member.id}'` , (err , rows) => {
+		con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'` , (err , rows) => {
 
 			if(err) throw err;
 
@@ -46,13 +46,13 @@ module.exports = {
 			if (activeWarns == 1) {
                 member.roles.remove(warnedonceRole);
 				message.channel.send(`${member.user.tag} has been unwarned.`)
-				con.query(`SELECT * FROM data WHERE memberID = '${member.id}'`, (err, rows) => {
+				con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'`, (err, rows) => {
 
 					if(err) throw err;
 
 					if (rows.length >= 1) {
 
-						con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
 
 					}
 				})
@@ -62,13 +62,13 @@ module.exports = {
                 member.roles.remove(warnedonceRole);
 				member.roles.remove(warnedtwiceRole);
 				message.channel.send(`${member.user.tag} has been unwarned.`)
-				con.query(`SELECT * FROM data WHERE memberID = '${member.id}'`, (err, rows) => {
+				con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'`, (err, rows) => {
 
 					if(err) throw err;
 
 					if (rows.length >= 1) {
 
-						con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
 					}
 				})		
 			}

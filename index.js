@@ -4,7 +4,6 @@ const { prefix, guildID, version, owner, admins, token, warnedonceRole, warnedtw
 const database = require("./database.json");
 const mysql = require("mysql");
 
-
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
@@ -22,7 +21,7 @@ var con = mysql.createConnection({
 	host: database.host,
 	user: database.user,
 	password: database.password,
-	database: "haix_warnings"        
+	database: database.database        
 
 });
 
@@ -42,33 +41,28 @@ client.once('ready', () => {
 
 		now = Date.now();
 
-        con.query(`SELECT * FROM data WHERE expiryDate < '${now}' ORDER BY id` , (err , rows) => {
-
+        con.query(`SELECT * FROM warnings WHERE expiryDate < '${now}' ORDER BY id` , (err , rows) => {
             if (err) throw err;
 
             if (rows.length > 0) {
-
                 for (var i = 0; i < rows.length; i++) {
-
 					let guild = client.guilds.cache.get(guildID)
                     member = guild.members.cache.get(rows[i].memberID);
 					var activeWarns = rows[i].activeWarns;
 
-					if (typeof member == "undefined") return con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
 	
                     if (activeWarns == 1) {
-
                         member.roles.remove(warnedonceRole);
                         member.send("Your warning on the HaiX Discord Server has been finished.");
-                        con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+                        con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
 
                     if (activeWarns == 2) {
-
                         member.roles.remove(warnedonceRole);
                         member.roles.remove(warnedtwiceRole);
                         member.send("Your warnings on the HaiX Discord Server has been finished.");
-                        con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+                        con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
                 }
             }
@@ -78,28 +72,26 @@ client.once('ready', () => {
 
 client.on('guildMemberAdd', member => {
 
-	con.query(`SELECT activeWarns FROM data WHERE memberID = '${member.id}'` , (err , rows) => {
+	con.query(`SELECT activeWarns FROM warnings WHERE memberID = '${member.id}'` , (err , rows) => {
 
 		if(err) throw err;
 
 		if (rows.length < 1) return;
 
 		else {
+			let activeWarns = rows[0].activeWarns
 
-		let activeWarns = rows[0].activeWarns
-
-		if (activeWarns == 2) {
-			member.roles.add(warnedonceRole);
-			member.roles.add(warnedtwiceRole);
-			member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
-
-		} 
+			if (activeWarns == 2) {
+				member.roles.add(warnedonceRole);
+				member.roles.add(warnedtwiceRole);
+				member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
+			} 
 		
-		if (activeWarns == 1) {
-			member.roles.add(warnedonceRole);
-			member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
+			if (activeWarns == 1) {
+					member.roles.add(warnedonceRole);
+					member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
+			}
 		}
-	}
 	})
 });
 
