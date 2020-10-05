@@ -56,15 +56,11 @@ client.once('ready', () => {
 
 					if (typeof member == "undefined") return con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
 	
-			
-
                     if (activeWarns == 1) {
 
                         member.roles.remove(warnedonceRole);
                         member.send("Your warning on the HaiX Discord Server has been finished.");
                         con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
-
-
                     }
 
                     if (activeWarns == 2) {
@@ -73,7 +69,6 @@ client.once('ready', () => {
                         member.roles.remove(warnedtwiceRole);
                         member.send("Your warnings on the HaiX Discord Server has been finished.");
                         con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
-
                     }
                 }
             }
