@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
+const { prefix, guildID, version, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
 const database = require("./database.json");
 const mysql = require("mysql");
 
@@ -17,27 +17,71 @@ for (const file of commandFiles) {
 
 const cooldowns = new Discord.Collection();
 
-client.once('ready', () => {
-	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
-	console.log('DreamerDog initialized & ready!');
+var con = mysql.createConnection({
+
+	host: database.host,
+	user: database.user,
+	password: database.password,
+	database: "haix_warnings"        
+
 });
 
-client.on('guildMemberAdd', member => {
+client.once('ready', () => {
 
-	var con = mysql.createConnection({
+	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
+    console.log(`DreamerDog version ${version} initialized & ready!`);
 
-		host: database.host,
-		user: database.user,
-		password: database.password,
-		database: "haix_warnings"        
-
-	});
-
+    
 	con.connect(err => {
 
 		if(err) throw err;
 
 	});
+    
+	setInterval(() => {
+
+		now = Date.now();
+
+        con.query(`SELECT * FROM data WHERE expiryDate < '${now}' ORDER BY id` , (err , rows) => {
+
+            if (err) throw err;
+
+            if (rows.length > 0) {
+
+                for (var i = 0; i < rows.length; i++) {
+
+					let guild = client.guilds.cache.get(guildID)
+                    member = guild.members.cache.get(rows[i].memberID);
+					var activeWarns = rows[i].activeWarns;
+
+					if (typeof member == "undefined") return con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+	
+			
+
+                    if (activeWarns == 1) {
+
+                        member.roles.remove(warnedonceRole);
+                        member.send("Your warning on the HaiX Discord Server has been finished.");
+                        con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+
+
+                    }
+
+                    if (activeWarns == 2) {
+
+                        member.roles.remove(warnedonceRole);
+                        member.roles.remove(warnedtwiceRole);
+                        member.send("Your warnings on the HaiX Discord Server has been finished.");
+                        con.query(`DELETE FROM data WHERE memberID = '${member.id}'`);
+
+                    }
+                }
+            }
+        })  
+    }, 60000);
+});
+
+client.on('guildMemberAdd', member => {
 
 	con.query(`SELECT activeWarns FROM data WHERE memberID = '${member.id}'` , (err , rows) => {
 

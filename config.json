@@ -1,4 +1,5 @@
 {
+	"version": "2.0",
 	"prefix": "d:",
 	"owner": "614556845335642146",
 	"admins": ["GOD", "The Overseers", "Head Administrator", "Senior Administrators", "Administrators", "Moderators", "Dog Bot Dev"],
@@ -7,5 +8,6 @@
 	"warnedonceRole": "577139538938429443",
 	"warnedtwiceRole": "577139713807482912",
 	"bannedRole": "676374298763591690",
+	"guildID": "334103665428267011",
 	"token": "TOKEN-HERE"
 }
