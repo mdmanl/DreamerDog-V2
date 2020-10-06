@@ -27,7 +27,8 @@ module.exports = {
 
 			if (activeWarns == 1) {
                 member.roles.remove(warnedonceRole);
-				message.channel.send(`${member.user.tag} has been unwarned.`)
+				message.channel.send(`${member.user.tag} has been unwarned.`);
+				member.send(`Your warning got removed by ${message.author.username}`);
 				con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'`, (err, rows) => {
 
 					if(err) throw err;
@@ -43,7 +44,8 @@ module.exports = {
 			if (activeWarns == 2) {
                 member.roles.remove(warnedonceRole);
 				member.roles.remove(warnedtwiceRole);
-				message.channel.send(`${member.user.tag} has been unwarned.`)
+				message.channel.send(`${member.user.tag} has been unwarned.`);
+				member.send(`Your warnings got removed by ${message.author.username}`);
 				con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'`, (err, rows) => {
 
 					if(err) throw err;
