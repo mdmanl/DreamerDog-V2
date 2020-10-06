@@ -150,7 +150,7 @@ client.on('message', async message => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-		command.execute(message, con, args);
+		command.execute(message, args, con);
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');

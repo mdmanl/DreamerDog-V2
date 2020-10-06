@@ -6,7 +6,7 @@ module.exports = {
 	usage: '[User]',
 	guildOnly: true,
 	adminOnly: true,
-	async execute(message, con) {
+	async execute(message, args, con) {
 		
 		let member = message.mentions.members.first();
 
