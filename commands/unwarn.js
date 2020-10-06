@@ -1,7 +1,4 @@
-const nodeDate = require('date-and-time');
-const mysql = require("mysql");
-const database = require("../database.json");
-const { admins, warningChannel, warnedonceRole, warnedtwiceRole } = require('../config.json');
+const { warnedonceRole, warnedtwiceRole } = require('../config.json');
 
 module.exports = {
 	name: 'unwarn',
@@ -9,29 +6,14 @@ module.exports = {
 	usage: '[User]',
 	guildOnly: true,
 	adminOnly: true,
-	async execute(message, args) {
+	async execute(message, con) {
 		
 		let member = message.mentions.members.first();
 
 		const astridGasp = message.client.emojis.cache.get("591044479444844545");
 
-		var con = mysql.createConnection({
-
-            host: database.host,
-            user: database.user,
-            password: database.password,
-            database: database.database        
-
-		});
-				
+			
 		if(!member) return message.delete(), message.channel.send(`You didn't tag a valid m0mber ${astridGasp}`);
-
-		con.connect(err => {
-
-        	if(err) throw err;
-
-		});
-		
 	
 		con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'` , (err , rows) => {
 
