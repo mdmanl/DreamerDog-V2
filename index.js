@@ -30,7 +30,7 @@ client.once('ready', () => {
 	con.connect(err => {
 
 		if(err) throw err;
-		client.log(`Database connection established.`)
+		console.log(`Database connection established.`)
 
 	});
 
