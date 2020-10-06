@@ -36,8 +36,6 @@ client.once('ready', () => {
 	});
 
 	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' });
-
-
     
 	setInterval(() => {
 
