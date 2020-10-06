@@ -47,10 +47,11 @@ client.once('ready', () => {
             if (rows.length > 0) {
                 for (var i = 0; i < rows.length; i++) {
 					let guild = client.guilds.cache.get(guildID)
-                    member = guild.members.cache.get(rows[i].memberID);
+					member = guild.members.cache.get(rows[i].memberID);
+					var leftUser = rows[i].memberID;
 					var activeWarns = rows[i].activeWarns;
 
-					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${leftUser}'`);
 	
                     if (activeWarns == 1) {
                         member.roles.remove(warnedonceRole);
