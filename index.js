@@ -30,12 +30,12 @@ client.once('ready', () => {
 	con.connect(err => {
 
 		if(err) throw err;
-		console.log(`Database connection established.`)
+		console.log(`Database connection established.`);
+		console.log(`DreamerDog version ${version} initialized & ready!`);
 
 	});
 
-	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
-    console.log(`DreamerDog version ${version} initialized & ready!`);
+	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' });
 
 
     
