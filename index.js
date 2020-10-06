@@ -27,15 +27,17 @@ var con = mysql.createConnection({
 
 client.once('ready', () => {
 
-	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
-    console.log(`DreamerDog version ${version} initialized & ready!`);
-
-    
 	con.connect(err => {
 
 		if(err) throw err;
+		client.log(`Database connection established.`)
 
 	});
+
+	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' })
+    console.log(`DreamerDog version ${version} initialized & ready!`);
+
+
     
 	setInterval(() => {
 
