@@ -1,8 +1,10 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, guildID, version, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
+const { prefix, guildID, logChannel, version, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
 const database = require("./database.json");
 const mysql = require("mysql");
+let NodeMonkey = require("node-monkey")
+NodeMonkey()
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -55,14 +57,26 @@ client.once('ready', () => {
 	
                     if (activeWarns == 1) {
                         member.roles.remove(warnedonceRole);
-                        member.send("Your warning on the HaiX Discord Server has been finished.");
+						member.send("Your warning on the HaiX Discord Server has been finished.");
+							var unwarnEmbed = new Discord.MessageEmbed()
+							.setColor('#73e600')
+							.setTitle(`${member.user.username}'s time in gulag is over`)
+							.setAuthor(`${member.user.tag}`, member.user.avatarURL, '')
+							.setTimestamp()
+							client.channels.cache.get(logChannel).send(unwarnEmbed)
                         con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
 
                     if (activeWarns == 2) {
                         member.roles.remove(warnedonceRole);
                         member.roles.remove(warnedtwiceRole);
-                        member.send("Your warnings on the HaiX Discord Server has been finished.");
+						member.send("Your warnings on the HaiX Discord Server has been finished.");
+						var unwarnEmbed = new Discord.MessageEmbed()
+						.setColor('#73e600')
+						.setTitle(`${member.user.username}'s time in gulag is over`)
+						.setAuthor(`${member.user.tag}`, member.user.avatarURL, '')
+						.setTimestamp()
+						client.channels.cache.get(logChannel).send(unwarnEmbed)
                         con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
                 }
