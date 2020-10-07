@@ -1,4 +1,4 @@
-const logChannel = require('../config.json');
+const { logChannel, owner } = require('../config.json');
 
 module.exports = {
     name: 'say',
