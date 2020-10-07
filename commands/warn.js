@@ -12,8 +12,8 @@ module.exports = {
 		
 		let member = message.mentions.members.first();
 
-		const astridGasp = message.client.emojis.cache.get("591044479444844545");
-		const pepeBoomer = message.client.emojis.cache.get("660450393481936896");
+		const astridGasp = message.client.emojis.cache.get("761339495379369996");
+		const pepeBoomer = message.client.emojis.cache.get("763147736241406013");
 			
 		if(!member) return message.delete(), message.channel.send(`You didn't tag a valid m0mber ${astridGasp}`);
 
