@@ -37,7 +37,11 @@ client.once('ready', () => {
 
 	});
 
-	client.user.setActivity('www.HaiX.best', { type: 'WATCHING' });
+	setInterval(() => {
+		targetGuild = client.guilds.cache.get(guildID)
+		client.user.setActivity(`${targetGuild.memberCount} members`, { type: 'WATCHING' })
+	  }, 60000);
+	  
     
 	setInterval(() => {
 
