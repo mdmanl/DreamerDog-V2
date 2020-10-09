@@ -1,6 +1,6 @@
 module.exports = {
     name: 'userinfo',
-    aliases: ['ui', 'me'],
+    aliases: ['ui', 'me', 'bio'],
 	cooldown: 30,
 	description: 'Shows information about the user tagged or yourself',
 	execute(message, args, con) {
