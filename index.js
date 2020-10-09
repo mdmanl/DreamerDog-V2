@@ -36,11 +36,12 @@ client.once('ready', () => {
 		console.log(`DreamerDog version ${version} initialized & ready!`);
 
 	});
+	targetGuild = client.guilds.cache.get(guildID)
+	client.user.setActivity(`${targetGuild.memberCount} members!`, { type: 'WATCHING' })
 
 	setInterval(() => {
-		targetGuild = client.guilds.cache.get(guildID)
-		client.user.setActivity(`${targetGuild.memberCount} members`, { type: 'WATCHING' })
-	  }, 60000);
+		client.user.setActivity(`${targetGuild.memberCount} members!`, { type: 'WATCHING' })
+	  }, 300000);
 	  
     
 	setInterval(() => {
@@ -154,7 +155,10 @@ client.on('message', async message => {
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 0) * 1000;
+	var cooldownAmount = (command.cooldown || 0) * 1000;
+
+	if (message.member.roles.cache.some(r=>admins.includes(r.name)) ) cooldownAmount = (0);
+
 
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
