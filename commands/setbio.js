@@ -10,7 +10,7 @@ module.exports = {
         if (userBio.length >= 50) return message.channel.send("Oops, your bio can be max 50 characters long.");
         let wordArray = message.content.split(" ");
 
-        let filterWords = [`"`];
+        let filterWords = [`"`, `\\`];
 
         for (var i = 0; i < filterWords.length; i++) {
             if(wordArray.find(w => w.indexOf(filterWords[i]) >= 0)) {
@@ -22,9 +22,14 @@ module.exports = {
 
             if(err) throw err;
             if (rows.length < 1) {
+
                 con.query(`INSERT INTO users (memberID,bio) VALUES ("${message.author.id}","${userBio}")`);
                 message.channel.send('Your bio has been set!')
+
             } else {
+
+                if (userBio == rows[0].bio) return message.channel.send("Oops, your new bio is the same as current bio.");
+
                 con.query(`UPDATE users SET bio = "${userBio}" WHERE memberID = '${message.author.id}'`);
                 message.channel.send('Your bio has been updated!')
             }
