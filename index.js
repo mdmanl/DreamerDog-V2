@@ -16,6 +16,10 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
+console.log = function(log) {
+    client.channels.cache.get("764621885626384415").send(log); 
+}
+
 const cooldowns = new Discord.Collection();
 
 var con = mysql.createConnection({
@@ -34,6 +38,7 @@ client.once('ready', () => {
 		if(err) throw err;
 		console.log(`Database connection established.`);
 		console.log(`DreamerDog version ${version} initialized & ready!`);
+		console.log(`<@!614556845335642146> I just restarted. If you didn't do that, then something went wrong but I instantly restarted, so thats nice. But maybe you still better go and watch the logs :)`);
 
 	});
 	targetGuild = client.guilds.cache.get(guildID)
@@ -157,7 +162,11 @@ client.on('message', async message => {
 	const timestamps = cooldowns.get(command.name);
 	var cooldownAmount = (command.cooldown || 0) * 1000;
 
-	if (message.member.roles.cache.some(r=>admins.includes(r.name)) ) cooldownAmount = (0);
+
+	if (message.channel.type !== 'dm') {
+		if (message.member.roles.cache.some(r=>admins.includes(r.name)) ) cooldownAmount = (0);
+	}
+	
 
 
 	if (timestamps.has(message.author.id)) {
