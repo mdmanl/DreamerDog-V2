@@ -1,4 +1,5 @@
 const { warnedonceRole, warnedtwiceRole } = require('../config.json');
+const emoji = require("../emoji.json");
 
 module.exports = {
 	name: 'unwarn',
@@ -9,54 +10,32 @@ module.exports = {
 	async execute(message, args, con) {
 		
 		let member = message.mentions.members.first();
-
-		const astridGasp = message.client.emojis.cache.get("761339495379369996");
-
-			
-		if(!member) return message.delete(), message.channel.send(`You didn't tag a valid m0mber ${astridGasp}`);
+		if(!member) return message.channel.send(`You didn't tag a valid m0mber ${emoji.astridgasp}`);
 	
 		con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'` , (err , rows) => {
-
 			if(err) throw err;
-
+			
             if (rows.length < 1) return message.channel.send(`${member.user.tag} doesn't have an active warning.`);
 
             else {
 
-			let activeWarns = rows[0].activeWarns;
+				let activeWarns = rows[0].activeWarns;
 
-			if (activeWarns == 1) {
-                member.roles.remove(warnedonceRole);
-				message.channel.send(`${member.user.tag} has been unwarned.`);
-				member.send(`Your warning got removed by ${message.author.username}`);
-				con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'`, (err, rows) => {
+				if (activeWarns == 1) {
+              	  member.roles.remove(warnedonceRole);
+					message.channel.send(`${member.user.tag} has been unwarned.`);
+					member.send(`Your warning got removed by ${message.author.username}`);
+					con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+				}
 
-					if(err) throw err;
-
-					if (rows.length >= 1) {
-
-						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
-
-					}
-				})
+				if (activeWarns == 2) {
+               		member.roles.remove(warnedonceRole);
+					member.roles.remove(warnedtwiceRole);
+					message.channel.send(`${member.user.tag} has been unwarned.`);
+					member.send(`Your warnings got removed by ${message.author.username}`);
+					con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);	
+				}
 			}
-
-			if (activeWarns == 2) {
-                member.roles.remove(warnedonceRole);
-				member.roles.remove(warnedtwiceRole);
-				message.channel.send(`${member.user.tag} has been unwarned.`);
-				member.send(`Your warnings got removed by ${message.author.username}`);
-				con.query(`SELECT * FROM warnings WHERE memberID = '${member.id}'`, (err, rows) => {
-
-					if(err) throw err;
-
-					if (rows.length >= 1) {
-
-						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
-					}
-				})		
-			}
-		}
 		})
 	},
 };
