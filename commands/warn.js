@@ -22,6 +22,15 @@ module.exports = {
 		let reason = args.slice(1).join(' ');
 		if(!reason) return message.delete(), message.channel.send(`Reason? ${astridGasp}`);
 
+		let wordArray = message.content.split(" ");
+		let filterWords = [`"`, `\\`, '`', `_`, `~`];
+        for (var i = 0; i < filterWords.length; i++) {
+            if(wordArray.find(w => w.indexOf(filterWords[i]) >= 0)) {
+				message.delete();
+                return message.channel.send("Oops, the reason contains unsupported characters.");
+            }
+        }
+
 		let now = nodeDate.format(new Date(), 'HH:mm [GMT+1] DD[th] of MMMM');
 		expiryDate = Date.now() + 1000*60*60*24*7;
 	
@@ -40,7 +49,7 @@ module.exports = {
 
 					if (rows.length < 1) {
 
-						con.query(`INSERT INTO warnings (memberID,reason,expiryDate,admin,activeWarns) VALUES ("${member.user.id}","${reason}","${expiryDate}","${message.author.username}","1")`);
+						con.query(`INSERT INTO warnings (memberID,reason,expiryDate,admin,activeWarns) VALUES ("${member.user.id}","${reason}","${expiryDate}","${message.author.id}","1")`);
 
 					}
 				})				
@@ -60,7 +69,7 @@ module.exports = {
 
 					if (rows.length >= 1) {
 
-					con.query(`UPDATE warnings SET reason = '${reason}', expiryDate = '${expiryDate}', admin = '${message.author.username}', activeWarns = '2' WHERE memberID = '${member.id}'`);
+					con.query(`UPDATE warnings SET reason = '${reason}', expiryDate = '${expiryDate}', admin = '${message.author.id}', activeWarns = '2' WHERE memberID = '${member.id}'`);
 
 					}
 				})
