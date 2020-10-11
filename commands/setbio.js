@@ -10,7 +10,7 @@ module.exports = {
         if (userBio.length >= 50) return message.channel.send("Oops, your bio can be max 50 characters long.");
         let wordArray = message.content.split(" ");
 
-        let filterWords = [`"`, `\\`];
+        let filterWords = [`"`, `\\`, `@`, `<`, `>`, `#`, '`', `_`, `~`, `/`];
 
         for (var i = 0; i < filterWords.length; i++) {
             if(wordArray.find(w => w.indexOf(filterWords[i]) >= 0)) {
