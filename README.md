@@ -1,7 +1,7 @@
 # DreamerDog-V2
 This is the new code of DreamerDog (AutoModerator excluded), everything is written from scratch again.
 
-DreamerDog is written for the official Discord of the Youtuber HaiX, so lots of code are for that specific server.
+DreamerDog is written for the official Discord of the Youtuber HaiX, so lots of code is for that specific server.
 
 What's new?
  - Upgraded to DiscordJS V12.
