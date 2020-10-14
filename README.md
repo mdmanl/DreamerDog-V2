@@ -5,6 +5,7 @@ DreamerDog is written for the official Discord of the Youtuber HaiX, so lots of 
 
 What's new?
  - Upgraded to DiscordJS V12.
+ - Added playing music of Youtube function!
  - Command handler, rather than using a single file for the program.
  - Thanks to the command handler, existing commands can be reloaded without needing to restart the bot.
  - Command cooldowns.
