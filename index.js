@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { prefix, guildID, logChannel, version, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
 const database = require("./database.json");
 const mysql = require("mysql");
+const activeSongs = new Map();
 let NodeMonkey = require("node-monkey")
 NodeMonkey()
 
@@ -82,17 +83,17 @@ client.once('ready', () => {
                         member.roles.remove(warnedtwiceRole);
 						member.send("Your warnings on the HaiX Discord Server has been finished.");
 						var unwarnEmbed = new Discord.MessageEmbed()
-						.setColor('#73e600')
-						.setTitle(`${member.user.username}'s time in gulag is over`)
-						.setAuthor(`${member.user.tag}`, member.user.avatarURL, '')
-						.setTimestamp()
+							.setColor('#73e600')
+							.setTitle(`${member.user.username}'s time in gulag is over`)
+							.setAuthor(`${member.user.tag}`, member.user.avatarURL, '')
+							.setTimestamp()
 						client.channels.cache.get(logChannel).send(unwarnEmbed)
                         con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
                 }
             }
         })  
-    }, 60000);
+    }, 5000);
 });
 
 client.on('guildMemberAdd', member => {
@@ -181,8 +182,12 @@ client.on('message', async message => {
 	timestamps.set(message.author.id, now);
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
+	var options = {
+		active: activeSongs
+	};
+
 	try {
-		command.execute(message, args, con);
+		command.execute(message, args, con, options, client);
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
