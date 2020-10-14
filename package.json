@@ -5,9 +5,14 @@
   "main": "index.js",
   "author": "Joey van Kouwenberg",
   "dependencies": {
+    "@discordjs/opus": "^0.3.2",
     "axios": "^0.20.0",
     "date-and-time": "^0.14.1",
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
-    "winston": "^3.2.1"
+    "mysql": "^2.18.1",
+    "node-monkey": "^1.1.0",
+    "winston": "^3.2.1",
+    "yt-search": "^2.3.3",
+    "ytdl-core": "^3.3.0"
   }
 }
