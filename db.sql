@@ -26,3 +26,5 @@ CREATE TABLE stats
   kicks varchar(200) NOT NULL DEFAULT '0',
   PRIMARY KEY (ID)
 );
+
+INSERT INTO stats (id,warns,bans,kicks) VALUES ("1", "0", "0", "0")
