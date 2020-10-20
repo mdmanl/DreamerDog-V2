@@ -71,8 +71,10 @@ client.once('ready', () => {
 						member.send("Your warning on the HaiX Discord Server has been finished.");
 							var unwarnEmbed = new Discord.MessageEmbed()
 							.setColor('#73e600')
-							.setTitle(`${member.user.username}'s time in gulag is over`)
-							.setAuthor(`${member.user.tag}`, member.user.avatarURL, '')
+							.setTitle(`${member.user.tag} was released from Gulag.`)
+							.addField('Released by:', 'DreamerDog', false)
+							.addField('Reason:', 'Warning Expired', false)
+							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
 							client.channels.cache.get(logChannel).send(unwarnEmbed)
                         con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
@@ -84,8 +86,10 @@ client.once('ready', () => {
 						member.send("Your warnings on the HaiX Discord Server has been finished.");
 						var unwarnEmbed = new Discord.MessageEmbed()
 							.setColor('#73e600')
-							.setTitle(`${member.user.username}'s time in gulag is over`)
-							.setAuthor(`${member.user.tag}`, member.user.avatarURL, '')
+							.setTitle(`${member.user.tag} was released from Gulag.`)
+							.addField('Released by:', 'DreamerDog', false)
+							.addField('Reason:', 'Warning Expired', false)
+							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
 						client.channels.cache.get(logChannel).send(unwarnEmbed)
                         con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
