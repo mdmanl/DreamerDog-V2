@@ -7,7 +7,7 @@ module.exports = {
 	usage: '[User] [Reason]',
 	guildOnly: true,
 	adminOnly: true,
-	async execute(message, args) {
+	async execute(message, args, con) {
 		
 		let member = message.mentions.members.first();			
 		if(!member) return message.channel.send(`You didn't tag a valid m0mber ${emoji.astridgasp}`);
@@ -17,6 +17,7 @@ module.exports = {
     	if(!reason) reason = "No reason provided";
     
     	member.ban({ reason: `Banned by ${message.author.username}. Reason: ${reason}` })
-    	message.channel.send(`${member.user.tag} has been banned.`);
+		message.channel.send(`${member.user.tag} has been banned.`);
+		con.query(`UPDATE stats SET bans = bans + 1 WHERE id = '1'`);
 	},
 };

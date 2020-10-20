@@ -41,6 +41,7 @@ module.exports = {
 				message.client.channels.cache.get(warningChannel).send(`${member} Warned once by Admin: ${message.author.username} ${now} **Reason: ${reason}**`);
 				message.channel.send(`${member.user.tag} has been warned.`)
 				con.query(`INSERT INTO warnings (memberID,reason,expiryDate,admin,activeWarns) VALUES ("${member.user.id}","${reason}","${expiryDate}","${message.author.id}","1")`);
+				con.query(`UPDATE stats SET warns = warns + 1 WHERE id = '1'`);
 			}
 
 			else {
@@ -52,13 +53,16 @@ module.exports = {
 					message.client.channels.cache.get(warningChannel).send(`${member} Warned twice by Admin: ${message.author.username} ${now} **Reason: ${reason}**`);
 					message.channel.send(`${member.user.tag} has been warned.`)
 					con.query(`UPDATE warnings SET reason = '${reason}', expiryDate = '${expiryDate}', admin = '${message.author.id}', activeWarns = '2' WHERE memberID = '${member.id}'`);
+					con.query(`UPDATE stats SET warns = warns + 1 WHERE id = '1'`);
 				}
 
 				if (activeWarns == 2) {
 					member.ban({ reason: 'Banned by DreamerDog: third warning.' });
 					message.client.channels.cache.get(warningChannel).send(`${member.user.tag} just got banned as he or she got a third warning. Don't be like ${member.user.tag}. **Reason: ${reason}**`);
 					message.channel.send(`${member.user.tag} has been warned.`)
-					con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);	
+					con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+					con.query(`UPDATE stats SET warns = warns + 1 WHERE id = '1'`);	
+					con.query(`UPDATE stats SET bans = bans + 1 WHERE id = '1'`);
 				}
 			}
 		})
