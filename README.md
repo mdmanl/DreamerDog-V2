@@ -13,3 +13,4 @@ What's new?
  - Added support for command aliases.
  - Added an advanced help command that automatically adds new commands.
  - Warnings are now handled by - and stored in the database, adding features like auto-unwarn, giving warn roles back on rejoin.
+ - Image fun commands.
