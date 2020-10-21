@@ -38,6 +38,7 @@ module.exports = {
 						.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 						.setTimestamp()
 					message.client.channels.cache.get(logChannel).send(unwarnEmbed)
+					con.query(`UPDATE stats SET unwarns = unwarnswarns + 1 WHERE id = '1'`);
 				}
 
 				if (activeWarns == 2) {
@@ -54,6 +55,7 @@ module.exports = {
 							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
 					message.client.channels.cache.get(logChannel).send(unwarnEmbed)
+					con.query(`UPDATE stats SET unwarns = unwarnswarns + 1 WHERE id = '1'`);
 				}
 			}
 		})
