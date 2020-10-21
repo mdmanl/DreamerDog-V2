@@ -31,7 +31,7 @@ module.exports = {
             ctx.drawImage(avatarSpankee, 540, 180, 128, 128);
     
                     
-            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'trash.png');
+            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${message.author.username}_spanks_${member.user.username}.png`);
     
             message.channel.send(attachment);
 

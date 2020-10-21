@@ -24,7 +24,7 @@ module.exports = {
             const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'png' }));
             ctx.drawImage(avatar, 480, 0, 480, 481);
 
-            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'trash.png');
+            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${message.author.username}_trash.png`);
 
         
             message.channel.send(attachment);
@@ -45,7 +45,7 @@ module.exports = {
             ctx.drawImage(avatar, 480, 0, 480, 481);
     
                     
-            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'trash.png');
+            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${member.user.username}_trash.png`);
     
             message.channel.send(attachment);
 
