@@ -78,7 +78,6 @@ client.once('ready', () => {
 							.setTimestamp()
 							client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
 						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
-						con.query(`UPDATE stats SET unwarns = unwarns + 1 WHERE id = '1'`);
                     }
 
                     if (activeWarns == 2) {
@@ -94,7 +93,6 @@ client.once('ready', () => {
 							.setTimestamp()
 						client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
 						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
-						con.query(`UPDATE stats SET unwarns = unwarns + 1 WHERE id = '1'`);
                     }
                 }
             }
