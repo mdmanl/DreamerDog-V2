@@ -24,7 +24,6 @@ CREATE TABLE stats
   warns varchar(200) NOT NULL DEFAULT '0',
   bans varchar(200) NOT NULL DEFAULT '0',
   kicks varchar(200) NOT NULL DEFAULT '0',
-  unwarns varchar(200) NOT NULL DEFAULT '0',
   PRIMARY KEY (ID)
 );
 
