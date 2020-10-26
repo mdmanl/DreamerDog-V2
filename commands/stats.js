@@ -15,7 +15,6 @@ module.exports = {
             var statsEmbed = new Discord.MessageEmbed()
 			    .setColor('#73e600')
 				.addField('Warns:', `${rows[0].warns}`, true)
-				.addField('Active Warns:', `${activeWarns}`, true)
 			    .addField('Kicks:', `${rows[0].kicks}`, true)
 				.addField('Bans:', `${rows[0].bans}`, true)
 				.addField('Members:', `${message.guild.memberCount}`, false)

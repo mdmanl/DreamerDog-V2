@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, guildID, logChannel, version, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
+const cfg = require('./config.json');
 const database = require("./database.json");
 const mysql = require("mysql");
 const activeSongs = new Map();
@@ -38,11 +38,11 @@ client.once('ready', () => {
 
 		if(err) throw err;
 		console.log(`Database connection established.`);
-		console.log(`DreamerDog version ${version} initialized & ready!`);
+		console.log(`DreamerDog version ${cfg.version} initialized & ready!`);
 		console.log(`<@!614556845335642146> I just restarted. If you didn't do that, then something went wrong but I instantly restarted, so thats nice. But maybe you still better go and watch the logs :)`);
 
 	});
-	targetGuild = client.guilds.cache.get(guildID)
+	targetGuild = client.guilds.cache.get(cfg.guildID)
 	client.user.setActivity(`${targetGuild.memberCount} members!`, { type: 'WATCHING' })
 
 	setInterval(() => {
@@ -59,15 +59,15 @@ client.once('ready', () => {
 
             if (rows.length > 0) {
                 for (var i = 0; i < rows.length; i++) {
-					let guild = client.guilds.cache.get(guildID)
+					let guild = client.guilds.cache.get(cfg.guildID)
 					member = guild.members.cache.get(rows[i].memberID);
 					var leftUser = rows[i].memberID;
 					var activeWarns = rows[i].activeWarns;
 
-					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${leftUser}'`);
+					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${leftUser}'`), con.query(`UPDATE stats SET unwarns = unwarns + 1 WHERE id = '1'`);
 	
                     if (activeWarns == 1) {
-                        member.roles.remove(warnedonceRole);
+                        member.roles.remove(cfg.warnedonceRole);
 						member.send("Your warning on the HaiX Discord Server has been finished.");
 							var unwarnEmbed = new Discord.MessageEmbed()
 							.setColor('#73e600')
@@ -76,13 +76,14 @@ client.once('ready', () => {
 							.addField('Reason:', 'Warning Expired', false)
 							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
-							client.channels.cache.get(logChannel).send(unwarnEmbed)
-                        con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+							client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
+						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+						con.query(`UPDATE stats SET unwarns = unwarns + 1 WHERE id = '1'`);
                     }
 
                     if (activeWarns == 2) {
-                        member.roles.remove(warnedonceRole);
-                        member.roles.remove(warnedtwiceRole);
+                        member.roles.remove(cfg.warnedonceRole);
+                        member.roles.remove(cfg.warnedtwiceRole);
 						member.send("Your warnings on the HaiX Discord Server has been finished.");
 						var unwarnEmbed = new Discord.MessageEmbed()
 							.setColor('#73e600')
@@ -91,8 +92,9 @@ client.once('ready', () => {
 							.addField('Reason:', 'Warning Expired', false)
 							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
-						client.channels.cache.get(logChannel).send(unwarnEmbed)
-                        con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+						client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
+						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+						con.query(`UPDATE stats SET unwarns = unwarns + 1 WHERE id = '1'`);
                     }
                 }
             }
@@ -112,13 +114,13 @@ client.on('guildMemberAdd', member => {
 			let activeWarns = rows[0].activeWarns
 
 			if (activeWarns == 2) {
-				member.roles.add(warnedonceRole);
-				member.roles.add(warnedtwiceRole);
+				member.roles.add(cfg.warnedonceRole);
+				member.roles.add(cfg.warnedtwiceRole);
 				member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
 			} 
 		
 			if (activeWarns == 1) {
-					member.roles.add(warnedonceRole);
+					member.roles.add(cfg.warnedonceRole);
 					member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
 			}
 		}
@@ -126,10 +128,10 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('message', async message => {
-	if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot) return;
+	if (!message.content.toLowerCase().startsWith(cfg.prefix) || message.author.bot) return;
 
 
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const args = message.content.slice(cfg.prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
 	const command = client.commands.get(commandName)
@@ -141,11 +143,11 @@ client.on('message', async message => {
 		return message.reply(`I can't execute that command inside DMs!`);
 	}
 
-	if (command.ownerOnly && message.author.id !== owner) {
+	if (command.ownerOnly && message.author.id !== cfg.owner) {
 		return message.reply('This command is owner only!');
 	}
 
-	if (command.adminOnly && !message.member.roles.cache.some(r=>admins.includes(r.name)) ) {
+	if (command.adminOnly && !message.member.roles.cache.some(r=>cfg.admins.includes(r.name)) ) {
 		return message.reply('This command is admin only!');
 	}
 
@@ -153,7 +155,7 @@ client.on('message', async message => {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
 
 		if (command.usage) {
-			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+			reply += `\nThe proper usage would be: \`${cfg.prefix}${command.name} ${command.usage}\``;
 		}
 
 		return message.channel.send(reply);
@@ -169,7 +171,7 @@ client.on('message', async message => {
 
 
 	if (message.channel.type !== 'dm') {
-		if (message.member.roles.cache.some(r=>admins.includes(r.name)) ) cooldownAmount = (0);
+		if (message.member.roles.cache.some(r=>cfg.admins.includes(r.name)) ) cooldownAmount = (0);
 	}
 	
 
@@ -198,4 +200,4 @@ client.on('message', async message => {
 	}
 });
 
-client.login(token);
+client.login(cfg.token);

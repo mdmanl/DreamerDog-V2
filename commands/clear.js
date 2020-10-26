@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'clear',
-	aliases: ['prune', 'delete', 'del'],
+	aliases: ['prune', 'del'],
 	description: 'Prune up to 99 messages. (Admin only)',
 	guildOnly: true,
 	adminOnly: true,

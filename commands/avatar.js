@@ -7,21 +7,9 @@ module.exports = {
 	execute(message) {
 
 		let member = message.mentions.members.first();
+		if (!member) member = message.member;
 
-		if (!member) {
-			
-			var eAvatar = new Discord.MessageEmbed()
-			.setColor('#73e600')
-			.setAuthor(`${message.author.username}'s avatar`, message.author.displayAvatarURL(), '')
-			.setImage(message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-			.setTimestamp()
-			.setFooter(`Requested by ${message.author.username}`);
-	
-		message.channel.send(eAvatar);
-
-		} else {
-
-			var eAvatar = new Discord.MessageEmbed()
+		var eAvatar = new Discord.MessageEmbed()
 			.setColor('#73e600')
 			.setAuthor(`${member.user.username}'s avatar`, member.user.displayAvatarURL(), '')
 			.setImage(member.user.displayAvatarURL({ dynamic: true, size: 1024 }))
@@ -29,10 +17,6 @@ module.exports = {
 			.setFooter(`Requested by ${message.author.username}`);
 	
 		message.channel.send(eAvatar);
-
-		}
-
-		
 
 	},
 };

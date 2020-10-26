@@ -1,4 +1,4 @@
-const { warnedonceRole, warnedtwiceRole, logChannel } = require('../config.json');
+const cfg = require('../config.json');
 const emoji = require("../emoji.json");
 const Discord = require("discord.js");
 
@@ -26,7 +26,7 @@ module.exports = {
 				let activeWarns = rows[0].activeWarns;
 
 				if (activeWarns == 1) {
-              	  member.roles.remove(warnedonceRole);
+              	  member.roles.remove(cfg.warnedonceRole);
 					message.channel.send(`${member.user.tag} has been unwarned.`);
 					member.send(`Your warning got removed by ${message.author.username}`);
 					con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
@@ -37,13 +37,12 @@ module.exports = {
 						.addField('Reason:', `${reason}`, false)
 						.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 						.setTimestamp()
-					message.client.channels.cache.get(logChannel).send(unwarnEmbed)
-					con.query(`UPDATE stats SET unwarns = unwarnswarns + 1 WHERE id = '1'`);
+					message.client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
 				}
 
 				if (activeWarns == 2) {
-               		member.roles.remove(warnedonceRole);
-					member.roles.remove(warnedtwiceRole);
+               		member.roles.remove(cfg.warnedonceRole);
+					member.roles.remove(cfg.warnedtwiceRole);
 					message.channel.send(`${member.user.tag} has been unwarned.`);
 					member.send(`Your warnings got removed by ${message.author.username}`);
 					con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);	
@@ -54,8 +53,7 @@ module.exports = {
 							.addField('Reason:', `${reason}`, false)
 							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
-					message.client.channels.cache.get(logChannel).send(unwarnEmbed)
-					con.query(`UPDATE stats SET unwarns = unwarnswarns + 1 WHERE id = '1'`);
+					message.client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
 				}
 			}
 		})

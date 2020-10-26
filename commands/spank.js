@@ -9,16 +9,14 @@ module.exports = {
 	async execute(message, args) {
 
         let member = message.mentions.members.first();
-        if(!member) {
+        if(!member) return message.reply(`Tag the person you want to spank.`);
+        if(member == "735485193124577350") return message.channel.send(`Don't you dare to spank me!`);
 
-            message.reply(`Tag the person you want to spank.`);
-
-        } else {
 
             const canvas = Canvas.createCanvas(741, 619);
             const ctx = canvas.getContext('2d');
         
-            const background = await Canvas.loadImage('./spank.jpg');
+            const background = await Canvas.loadImage('./imgfun/spank.jpg');
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         
             ctx.strokeStyle = '#74037b';
@@ -34,10 +32,6 @@ module.exports = {
             const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${message.author.username}_spanks_${member.user.username}.png`);
     
             message.channel.send(attachment);
-
-        }
-
-
     
     },
 };

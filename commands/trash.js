@@ -9,32 +9,13 @@ module.exports = {
 	async execute(message, args) {
 
         let member = message.mentions.members.first();
-        if(!member) {
+        if(!member) member = message.member;
+        if(member == "735485193124577350") return message.channel.send(`Don't you dare to trash me!`);
 
             const canvas = Canvas.createCanvas(960, 960);
             const ctx = canvas.getContext('2d');
         
-            const background = await Canvas.loadImage('./trash.png');
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        
-            ctx.strokeStyle = '#74037b';
-            ctx.strokeRect(0, 0, canvas.width, canvas.height);
-        
-          
-            const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'png' }));
-            ctx.drawImage(avatar, 480, 0, 480, 481);
-
-            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${message.author.username}_trash.png`);
-
-        
-            message.channel.send(attachment);
-
-        } else {
-
-            const canvas = Canvas.createCanvas(960, 960);
-            const ctx = canvas.getContext('2d');
-        
-            const background = await Canvas.loadImage('./trash.png');
+            const background = await Canvas.loadImage('./imgfun/trash.png');
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         
             ctx.strokeStyle = '#74037b';
@@ -48,11 +29,7 @@ module.exports = {
             const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${member.user.username}_trash.png`);
     
             message.channel.send(attachment);
-
-        }
-
-
-    
+   
     },
 };
 

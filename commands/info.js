@@ -1,4 +1,4 @@
-const { version } = require('../config.json');
+const cfg = require('../config.json');
 const emoji = require("../emoji.json");
 const Discord = require("discord.js");
 var osutils = require("os-utils");
@@ -26,9 +26,9 @@ module.exports = {
 			.addField('Memory usage', `${Math.round(used * 100) / 100} MB`, true)
 			.addField('Discord.js:', 'v12.3.1', false)
 			.addField('Node.js:', `${process.version}`, true)
-			.addField('MySQL:', 'MariaDB 10.5.5', true)
+			.addField('MySQL:', 'MariaDB 10.5.6', true)
 			.addField('OS:', `CentOS 7`, true)
-			.setAuthor(`DreamerDog ${version}`)
+			.setAuthor(`DreamerDog ${cfg.version}`)
 			.setFooter(`Developed and maintained by MDMA for HaiX Community`)
 
 		message.channel.send(infoEmbed)
