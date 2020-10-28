@@ -26,8 +26,6 @@ module.exports = {
 
 		con.query(`SELECT * FROM warnings WHERE memberID = '${member.user.id}'` , (err , rows) => {
 
-            if(isHidden == "true") return message.channel.send(`${member.user.username} has their information hidden.`)
-
             if(err) throw err;
 
             if (rows.length >= 1) {
