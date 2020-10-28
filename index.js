@@ -64,7 +64,7 @@ client.once('ready', () => {
 					var leftUser = rows[i].memberID;
 					var activeWarns = rows[i].activeWarns;
 
-					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${leftUser}'`), con.query(`UPDATE stats SET unwarns = unwarns + 1 WHERE id = '1'`);
+					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${leftUser}'`);
 	
                     if (activeWarns == 1) {
                         member.roles.remove(cfg.warnedonceRole);
@@ -118,8 +118,8 @@ client.on('guildMemberAdd', member => {
 			} 
 		
 			if (activeWarns == 1) {
-					member.roles.add(cfg.warnedonceRole);
-					member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
+				member.roles.add(cfg.warnedonceRole);
+				member.send(`Welcome back! But your time in Gulag isn't over yet, so I gave your role(s) back`);
 			}
 		}
 	})

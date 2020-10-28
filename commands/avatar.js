@@ -12,7 +12,7 @@ module.exports = {
 		var eAvatar = new Discord.MessageEmbed()
 			.setColor('#73e600')
 			.setAuthor(`${member.user.username}'s avatar`, member.user.displayAvatarURL(), '')
-			.setImage(member.user.displayAvatarURL({ dynamic: true, size: 1024 }))
+			.setImage(member.user.displayAvatarURL({ dynamic: true, size: 1024, format: 'png' }))
 			.setTimestamp()
 			.setFooter(`Requested by ${message.author.username}`);
 	

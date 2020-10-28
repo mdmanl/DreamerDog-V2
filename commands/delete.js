@@ -3,6 +3,7 @@ const Canvas = require('canvas');
 
 module.exports = {
     name: 'delete',
+    aliases: ['elete'],
     cooldown: 10,
     guildOnly: true,
 	description: `Delete someone`,
