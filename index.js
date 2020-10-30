@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const cfg = require('./config.json');
+const { prefix, guildID, logChannel, version, owner, admins, token, warnedonceRole, warnedtwiceRole } = require('./config.json');
 const database = require("./database.json");
 const mysql = require("mysql");
 const activeSongs = new Map();
@@ -50,7 +51,7 @@ client.once('ready', () => {
 	  }, 300000);
 	  
     
-	setInterval(() => {
+	  setInterval(() => {
 
 		now = Date.now();
 
@@ -59,7 +60,7 @@ client.once('ready', () => {
 
             if (rows.length > 0) {
                 for (var i = 0; i < rows.length; i++) {
-					let guild = client.guilds.cache.get(cfg.guildID)
+					let guild = client.guilds.cache.get(guildID)
 					member = guild.members.cache.get(rows[i].memberID);
 					var leftUser = rows[i].memberID;
 					var activeWarns = rows[i].activeWarns;
@@ -67,7 +68,7 @@ client.once('ready', () => {
 					if (typeof member == "undefined") return con.query(`DELETE FROM warnings WHERE memberID = '${leftUser}'`);
 	
                     if (activeWarns == 1) {
-                        member.roles.remove(cfg.warnedonceRole);
+                        member.roles.remove(warnedonceRole);
 						member.send("Your warning on the HaiX Discord Server has been finished.");
 							var unwarnEmbed = new Discord.MessageEmbed()
 							.setColor('#73e600')
@@ -76,13 +77,13 @@ client.once('ready', () => {
 							.addField('Reason:', 'Warning Expired', false)
 							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
-							client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
-						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+							client.channels.cache.get(logChannel).send(unwarnEmbed)
+                        con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
 
                     if (activeWarns == 2) {
-                        member.roles.remove(cfg.warnedonceRole);
-                        member.roles.remove(cfg.warnedtwiceRole);
+                        member.roles.remove(warnedonceRole);
+                        member.roles.remove(warnedtwiceRole);
 						member.send("Your warnings on the HaiX Discord Server has been finished.");
 						var unwarnEmbed = new Discord.MessageEmbed()
 							.setColor('#73e600')
@@ -91,8 +92,8 @@ client.once('ready', () => {
 							.addField('Reason:', 'Warning Expired', false)
 							.setAuthor(`User Warning Removed`, member.user.displayAvatarURL(), '')
 							.setTimestamp()
-						client.channels.cache.get(cfg.logChannel).send(unwarnEmbed)
-						con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
+						client.channels.cache.get(logChannel).send(unwarnEmbed)
+                        con.query(`DELETE FROM warnings WHERE memberID = '${member.id}'`);
                     }
                 }
             }
