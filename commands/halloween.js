@@ -4,7 +4,7 @@ module.exports = {
 	description: 'Shows how many days until Halloween.',
 	execute(message) {
 
-        var halloween = 1604181600000;
+        var halloween = 1635804000000;
 
         var now = Date.now();
 
